@@ -11,3 +11,11 @@ node
   Executar as aplicações
   KUBELET --> Responsavel pela execução dos podes dentro do cluster
   K-PROXY --> Resposavel pela comunicação de nossos nodes dentro do cluster
+
+Namespaces
+  PID: provê isolamento dos processos rodando dentro do contêiner;
+  NET: provê isolamento das interfaces de rede;
+  IPC: provê isolamento da comunicação entre processos e memória compartilhada;
+  MNT: provê isolamento do sistema de arquivos/pontos de montagem;
+  UTS: provê isolamento do kernel. Age como se o contêiner fosse outro host.
+
