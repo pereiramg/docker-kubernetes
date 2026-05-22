@@ -1,0 +1,57 @@
+
+
+docker exec -it [CONTAINER ID] /bin/bash --> Entrar no container
+
+docker inspect [CONTAINER ID] --> 
+
+docker logs [CONTAINER ID] --> Ver logs
+  
+docker pull [imagem] --> Ele faz apenas o download dessa imagem
+
+docker ps --> Exibe os contêineres em execução
+
+docker ps -a --> mostra containers ativos / parados / encerrados / com erro / criados mas nunca iniciados
+
+docker run [OPÇÕES] [contêiner] [COMANDO] --> Executa um contêiner
+  --help --> Ver todas as opções disponíveis --- docker run --help
+  -d --> detached, roda em segundo plano --- docker run -d nginx
+  --name --> Definir nome do container --- docker run --name web01 nginx
+  -p 8080:80 --> Mapear portas (Formato: PORTA_HOST:PORTA_CONTAINER) --- docker run -p 8080:80 nginx
+  -it --> Executar terminal interativo --- docker run -it ubuntu /bin/bash
+      -i --> interativo
+      -t --> terminal TTY
+  --rm --> Remover automaticamente ao sair (Container é apagado ao finalizar.) --- docker run --rm ubuntu
+  -v --> Montar volume/diretório (Formato: HOST:CONTAINER) --- docker run -v /dados:/app nginx
+  -e --> Definir variável de ambiente --- docker run -e MYSQL_ROOT_PASSWORD=senha mysql
+  --network minha_rede --> Conectar em rede específica --- docker run --network minha_rede nginx
+  -m 512m --> Limitar memória --- docker run -m 512m nginx
+  --cpus="1.5" --> Limitar CPU --- docker run --cpus="1.5" nginx
+  --restart always --> Reinício automático --- docker run --restart always nginx
+      Outras opções:
+        no
+        on-failure
+        unless-stopped
+  --hostname --> Definir hostname --- docker run --hostname servidor01 ubuntu
+  -u --> Rodar como usuário específico --- docker run -u 1000 ubuntu / docker run -u marcelo ubuntu
+  -w --> Definir diretório de trabalho --- docker run -w /app ubuntu
+  Executar comando customizado --- docker run ubuntu ls -l /
+  Exemplos reais
+    docker run -d --name nginx01 -p 80:80 nginx --> Subir um NGINX web
+    docker run -it ubuntu /bin/bash --> Abrir shell Ubuntu
+    docker run -d --name mysql01 -e MYSQL_ROOT_PASSWORD=Senha123 -p 3306:3306 mysql:8Banco MySQL --> Banco MySQL
+    
+  
+docker start [CONTAINER ID] --> Iniciar container
+
+docker stop [CONTAINER ID] --> Parar container
+
+
+
+
+
+
+
+
+
+
+
