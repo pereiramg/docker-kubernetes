@@ -94,6 +94,27 @@ ENTRYPOINT npm start
   Quando criarmos um container dessa imagem, ele criará uma pasta chamada foo
   Todo arquivo criado dentro dessa pasta será acessível a partir da máquina host no caminho /var/lib/docker/volumes
 
+=== LABEL ===
+  Usada para adicionar metadados à imagem Docker
+    FROM ubuntu
+    LABEL description="Imagem Docker personalizada"
+
+  Demais opções
+    LABEL maintainer="Marcelo Pereira" --> Autor
+    LABEL version="1.0" --> Versão
+    LABEL company="MinhaEmpresa" --> Empresa
+    LABEL environment="production" --> Ambiente
+    LABEL website="https://empresa.com" --> URL do projeto
+
+  Múltiplas labels
+    LABEL description="API Financeira" \
+          version="1.0" \
+          owner="DevOps Team"
+
+Padrão OCI (muito usado hoje)
+  LABEL org.opencontainers.image.title="Minha API"
+  LABEL org.opencontainers.image.version="1.0"
+  LABEL org.opencontainers.image.authors="Marcelo"
 
 ======================Segundo passo =============================
 
