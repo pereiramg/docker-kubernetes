@@ -29,8 +29,13 @@ de banda de rede ou combinações destes.
 ===================================== Imagem ============================================
 
 Podemos pensar em uma imagem como um arquivo executável independente, que contém todas as dependências e arquivos 
-necessários para o contêiner ser executado como um processo isolado em nossa máquina
+necessários para o contêiner ser executado como um processo isolado em nossa máquina.
 As imagens podem ser baixadas de um repositório (cujo nome é registry) ou criadas localmente e compiladas
+
+Uma imagem é formada por camadas.
+Um contêiner é formado por uma imagem, que tem as suas camadas, e recebe outra camada que fica por cima da pilha de camadas da imagem.
+Essa camada extra é uma camada read and write (leitura e escrita), ou seja, com ela, conseguimos interagir, alterar e inserir dados. 
+Já as camadas que formam o núcleo da imagem são read only (somente leitura), ou seja, não conseguimos alterá-las.
 
 Para criar uma imagem, podemos usar um arquivo de definição chamado de Dockerfile, no qual utilizamos algumas 
 diretivas para declarar o que teremos em nossa imagem.
