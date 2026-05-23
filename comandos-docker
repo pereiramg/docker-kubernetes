@@ -77,7 +77,7 @@ docker start [CONTAINER ID] --> Iniciar container
 
 docker stop [CONTAINER ID] --> Parar container
   -t=0 --> parar de imediato meu container
-  $(docker container ls -q) --> 
+  $(docker container ls -q) --> Para todos os container
 
 docker tag --> Usado para criar uma nova tag (apelido/referência) para uma imagem Docker existente
     docker tag nginx meu-nginx:v1 --> Exemplo simples
