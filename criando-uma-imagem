@@ -1,1 +1,109 @@
+O primeiro passo é criar o arquivo Dockerfile
+
+===================== Dockerfile ===========================
+
+FROM node:20
+WORKDIR /app
+COPY package.json .
+RUN npm install
+COPY . .
+ENTRYPOINT npm start
+
+
+==================== Explicação de cada linha ============================
+
+=== FROM ===
+  pode-se definir qual será o ponto de partida da imagem que criaremos com o nosso Dockerfile, ou seja, 
+  se eu quiser utilizar a imagem do Java para produzir meu container, basta que eu especifique para utilizar a imagem do openjdk como base.
+    FROM openjdk
+  Mas e caso eu queira criar uma imagem do zero absoluto? Sem me basear em imagem alguma? Para isso, posso utilizar a imagem scratch.
+    FROM scratch
+
+=== WORKDIR ===
+  Essa instrução tem o propósito de definir o nosso ambiente de trabalho. Com ela, definimos onde as instruções
+  CMD, RUN, ENTRYPOINT, ADD e COPY executarão suas tarefas, além de definir o diretório padrão que será aberto ao executarmos o container.
+    FROM ubuntu:18.04
+    RUN apt-get update
+    RUN ["apt-get", "install", "openjdk-8-jdk" ,"-y"]
+    WORKDIR /pasta-qualquer
+    COPY arquivo-host arquivo-host-transferido
+
+=== RUN ===
+  Ela pode ser executada uma ou mais vezes e, com ela, posso definir quais serão os comandos executados na etapa de criação de camadas da imagem.
+    RUN npm install
+    RUN yum install openjdk-8-jdk -y
+    RUN touch arquivo-de-boas-vindas
+  O RUN aceita parâmetros de dois jeitos:
+    RUN apt-get install openjdk-8-jdk -y ou RUN ["apt-get", "install" "openjdk-8-jdk" ,"-y"]
+
+=== CMD ===
+  É bem parecida com a instrução RUN, mas a diferença é que a instrução CMD executa o comando apenas quando criamos o 
+  container e não passamos nenhum parâmetro para ele.
+  Caso passássemos algo como docker run -it <id da imagem> /bin/bash, ele sobrescreveria o comando CMD touch arquivo-de-boas-vindas
+  e executaria apenas o /bin/bash.
+  
+  A sintaxe é a mesma, podemos passar os parâmetros do mesmo modo que a instrução RUN, alterando o último RUN por um CMD:
+    RUN yum install openjdk-8-jdk -y
+    CMD touch arquivo-de-boas-vindas
+  
+  Outro exemplo é seu eu tiver mais de 2 CMD
+    CMD touch arquivo-de-boas-vindas
+    CMD touch outro-arquivo
+  Ao abrir o container apenas o arquivo outro-arquivo terá sido criado.
+  O que acontece é que podemos ter quantos CMD quisermos, mas no fim das contas apenas será executado o último CMD, sem nenhum erro aparente!
+
+=== ENTRYPOINT ===
+  Essa instrução faz exatamente a mesma coisa do CMD, porém seus parâmetros não são sobrescritos caso passássemos algo
+  como docker run -it <id da imagem> /bin/bash
+
+=== ADD ===
+  O papel do ADD é fazer a cópia de um arquivo, diretório ou até mesmo fazer o download de uma URL de nossa máquina host e colocar dentro da imagem
+  Exemplo:
+    FROM ubuntu:18.04
+    RUN apt-get update
+    RUN ["apt-get", "install", "openjdk-8-jdk" ,"-y"]
+    ADD arquivo-host arquivo-host-transferido
+
+  A instrução ADD também tem alguns efeitos interessantes, como: caso o arquivo que esteja sendo passado seja um arquivo de extensão tar, 
+  ele fará a descompressão automaticamente, além do fato já mencionado de poder fazer download de arquivos por URLS.
+
+=== COPY ===
+  A instrução COPY, permite apenas a passagem de arquivos ou diretórios
+  Exemplo:
+    FROM ubuntu:18.04
+    RUN apt-get update
+    RUN ["apt-get", "install", "openjdk-8-jdk" ,"-y"]
+    COPY arquivo-host arquivo-host-transferido
+
+=== EXPOSE ===
+  O propósito é servir apenas para documentação
+  Aqui estamos informando que a porta de comunicação da nossa aplicação é essa.
+  Exemplo:
+    FROM ubuntu:18.04
+    RUN apt-get update
+    RUN apt-get install openjdk-8-jdk -y
+    EXPOSE 8080
+  Apenas lembrando que o Dockerfile acima não faz a publicação da porta, apenas serve como documentação.
+
+=== VOLUME ===
+  Essa instrução cria uma pasta em nosso container que será compartilhada entre o container e o host, funcionando do seguinte modo:
+    FROM ubuntu:18.04
+    RUN apt-get update
+    RUN apt-get install openjdk-8-jdk -y
+    VOLUME /foo
+  Quando criarmos um container dessa imagem, ele criará uma pasta chamada foo
+  Todo arquivo criado dentro dessa pasta será acessível a partir da máquina host no caminho /var/lib/docker/volumes
+
+
+======================Segundo passo =============================
+
+O arquivo se deve chamar Dockerfile e estar dentro do projeto
+
+Agora gerar a imagem agora com os comandos abaixo
+  docker build -t galdper/allbooks:1.1 .
+
+Assim que finalizar vamos validar
+  docker images
+
+
 
