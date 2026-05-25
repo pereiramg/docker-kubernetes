@@ -1,12 +1,12 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "",
+    "Name": "galdper/allbooks:1.2",
     "Update": "true"
   },
   "Ports": [
     {
-      "ContainerPort": 
+      "ContainerPort": 3000
     }
   ]
 }
