@@ -1,0 +1,60 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "Name": "",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "ContainerPort": 
+    }
+  ]
+}
+
+
+======================== Explicação ========================
+É usado pela Amazon Web Services principalmente no serviço AWS Elastic Beanstalk para definir 
+como containers Docker devem ser executados na infraestrutura AWS
+
+======================== Onde ele é usado? ========================
+Principalmente em:
+  Elastic Beanstalk Docker
+  ambientes ECS antigos integrados ao Beanstalk
+  deploy automatizado de aplicações containerizadas
+
+======================== Versões do arquivo ========================
+Version 1
+  Mais simples.
+  Usado para um único container.
+
+Version 2
+  Mais avançado.
+  Baseado em definição ECS Task.
+  Permite:
+      múltiplos containers
+      links
+      memória
+      CPU
+      volumes
+
+======= Exemplo V2 =======
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "web",
+      "image": "nginx",
+      "essential": true,
+      "memory": 256,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ]
+    }
+  ]
+}
+===========================
+
+
